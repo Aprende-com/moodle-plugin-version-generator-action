@@ -1,7 +1,7 @@
 # Moodle Plugin Version Generator - GitHub Action
 GitHub Action that increases version number from selected Moodle Plugins.
 
-In order to make this work, include the following snippet in your **.github/workflows** directory
+In order to make this work, include the following snippet in your **.github/workflows** directory as **moodle-plugin-version-generator.yaml**:
 
 ```
 name: Moodle Plugin Version Generator

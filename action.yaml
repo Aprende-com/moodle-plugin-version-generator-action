@@ -1,0 +1,12 @@
+name: "Moodle Plugin Version Generator"
+author: "Gerardo Grinman <gerardo.grinman@aprende.com>"
+description: "Increase the moodle plugin version"
+outputs:
+  version:
+    description: "A version.php file updated to the Pull-Request."
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'book'
+  color: 'blue'

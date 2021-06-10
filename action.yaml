@@ -1,6 +1,11 @@
 name: "Moodle Plugin Version Generator"
 author: "Gerardo Grinman <gerardo.grinman@aprende.com>"
 description: "Increase the moodle plugin version"
+inputs:
+  path:
+    description: "Path where the repository is located"
+    required: false
+    default: '.'
 outputs:
   version:
     description: "A version.php file updated to the Pull-Request."

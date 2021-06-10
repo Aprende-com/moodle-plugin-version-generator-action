@@ -2,6 +2,7 @@
 
 import datetime
 import os
+from os import environ, chdir
 
 def get_version_line():
     print("Find the version variable line")
@@ -34,7 +35,7 @@ def increase_version(current_version):
         print("Increase the current version date and reset version number to 00")
         version_date = current_date
         version_number = "0"
-    else:        
+    else:
         version_number = int(version_number) + 1
     version_number = str(version_number).zfill(version_number_len)
     print("New version date " + version_date)
@@ -54,10 +55,14 @@ def overwrite_version(line, new_version):
     return
 
 def main():
+
+    chdir(environ.getent('INPUT_PATH'))
+
     line = get_version_line()
     if line > -1:
         current_version = get_current_version(line)
         new_version = increase_version(current_version)
         overwrite_version(line, new_version)
 
-main()
+if __name__ == "__main__":
+    main()

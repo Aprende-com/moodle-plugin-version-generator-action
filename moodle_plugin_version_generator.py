@@ -56,7 +56,8 @@ def overwrite_version(line, new_version):
 
 def main():
 
-    chdir(environ.getenv('INPUT_PATH'))
+    # raises an exception if the env var doesn't exist
+    chdir(environ['INPUT_PATH'])
 
     line = get_version_line()
     if line > -1:

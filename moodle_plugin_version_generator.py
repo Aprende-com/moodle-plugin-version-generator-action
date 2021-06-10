@@ -56,7 +56,7 @@ def overwrite_version(line, new_version):
 
 def main():
 
-    chdir(environ.getent('INPUT_PATH'))
+    chdir(environ.getenv('INPUT_PATH'))
 
     line = get_version_line()
     if line > -1:

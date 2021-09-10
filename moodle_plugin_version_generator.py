@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
 
 import datetime
-import os
+# import os
 from os import environ, chdir
+
 
 def get_version_line():
     print("Find the version variable line")
-    a_file = open("version.php", "r")
-    list_of_lines = a_file.readlines()
+
+    with open("version.php", "r") as a_file:
+        list_of_lines = a_file.readlines()
+
     for i, line in enumerate(list_of_lines):
         if line.find("$plugin->version") != -1:
             print("Version line " + str(i))
             return i
+
     return -1
+
 
 def get_current_version(line):
     print("Retrieve the current version")
@@ -24,6 +29,7 @@ def get_current_version(line):
     current_version = version_line.split("=")[1]
     print("Current version " + current_version)
     return current_version
+
 
 def increase_version(current_version):
     print("Increase the current version")
@@ -47,6 +53,7 @@ def increase_version(current_version):
     print(f"new_version={new_version}")
     return new_version
 
+
 def overwrite_version(line, new_version):
     print("Overwrite the current version in the file")
     a_file = open("version.php", "r")
@@ -56,6 +63,7 @@ def overwrite_version(line, new_version):
     a_file.writelines(list_of_lines)
     a_file.close()
     return
+
 
 def main():
 
@@ -67,6 +75,7 @@ def main():
         current_version = get_current_version(line)
         new_version = increase_version(current_version)
         overwrite_version(line, new_version)
+
 
 if __name__ == "__main__":
     main()

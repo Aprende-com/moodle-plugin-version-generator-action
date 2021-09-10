@@ -16,16 +16,19 @@ def get_version_line():
 
 def get_current_version(line):
     print("Retrieve the current version")
-    a_file = open("version.php", "r")
-    list_of_lines = a_file.readlines()
-    current_version = list_of_lines[line][(list_of_lines[line].find("=") + 1):-2].strip();
+
+    with open("version.php", "r") as a_file:
+        list_of_lines = a_file.readlines()
+
+    version_line = list_of_lines[line].split(";")[0]
+    current_version = version_line.split("=")[1]
     print("Current version " + current_version)
     return current_version
 
 def increase_version(current_version):
     print("Increase the current version")
-    version_date = current_version[0:8]
-    version_number = current_version[8:len(current_version)]
+    version_date = current_version[0:9]
+    version_number = current_version[9:len(current_version)]
     version_number_len = len(version_number)
     print("Current version date " + version_date)
     print("Current version number " + version_number)
@@ -40,8 +43,8 @@ def increase_version(current_version):
     version_number = str(version_number).zfill(version_number_len)
     print("New version date " + version_date)
     print("New version number " + version_number)
-    new_version = version_date + version_number
-    print("New version " + new_version)
+    new_version = f"{version_date}{version_number}"
+    print(f"new_version={new_version}")
     return new_version
 
 def overwrite_version(line, new_version):

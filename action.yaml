@@ -23,10 +23,8 @@ branding:
       with:
         files: |
             db
-            db/*
 
-    - name: Run step only when files change.
-      if: steps.verify-changed-files.outputs.files_changed == 'true'
+    - name: Perform action when db directory changes
+      if: contains(steps.verify-changed-files.outputs.changed_files, 'db')
       run: |
-        echo "Changed files: ${{ steps.verify-changed-files.outputs.changed_files }}"
-      # Outputs: "Changed files: db/ or db/*"
+        echo "db/ directory has changed."

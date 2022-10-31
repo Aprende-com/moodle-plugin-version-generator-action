@@ -13,7 +13,7 @@ inputs:
 outputs:
   version:
     description: "A version.php file updated to the Pull-Request."
-  changed files:
+  changed_files:
     description: "changed files"
     value: ${{ steps.verify-changed-files.outputs.changed_files }}
 runs:
@@ -27,10 +27,13 @@ runs:
       with:
         files: |
            db
+           db/
+           db/*
+           ./db
     - name: Run step only when any of the above files change.
       if: steps.verify-changed-files.outputs.files_changed == 'true'
       run: |
-        echo "Changed files: ${{ steps.verify-changed-files.outputs.changed_files }}"
+        echo "changed_files: ${{ steps.verify-changed-files.outputs.changed_files }}"
       # Outputs: "Changed files: db "
     - name: Perform action when test_directory changes
       if: contains(steps.verify-changed-files.outputs.changed_files, 'db')

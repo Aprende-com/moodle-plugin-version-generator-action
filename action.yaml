@@ -20,21 +20,32 @@ runs:
   image: 'Dockerfile'
   steps:
     - uses: actions/checkout@v2
+    - name: Change text file
+      run: |
+        echo "Modified" > new.txt
+    - name: Change file in directory
+      run: |
+        echo "Changed" > test_directory/new.txt
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v12
       id: verify-changed-files
       with:
         files: |
-            db
+            *.txt
+            test_directory
+            action.yml
+            **/*.py
+            **/*.jpeg
+            !*.sql
     - name: Run step only when any of the above files change.
       if: steps.verify-changed-files.outputs.files_changed == 'true'
       run: |
         echo "Changed files: ${{ steps.verify-changed-files.outputs.changed_files }}"
       # Outputs: "Changed files: new.txt test_directory/new.txt"
     - name: Perform action when db directory changes
-      if: contains(steps.verify-changed-files.outputs.changed_files, 'db')
+      if: contains(steps.verify-changed-files.outputs.changed_files, 'test_directory')
       run: |
-        echo "db directory has changed."
+        echo "test_directory directory has changed."
 branding:
   icon: 'book'
   color: 'blue'

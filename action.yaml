@@ -33,21 +33,3 @@ branding:
   icon: 'book'
   color: 'blue'
   steps:
-
-
-
-
-
-
-
-jobs:
-  analyze:
-    name: Static Analysis with PHPStan
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Analysis
-      uses: docker://phpstan/phpstan
-      with:
-        args: analyze --error-format=table <code path>

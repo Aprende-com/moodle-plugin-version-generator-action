@@ -9,14 +9,13 @@ inputs:
 outputs:
   version:
     description: "A version.php file updated to the Pull-Request."
-runs:
-  using: 'docker'
-  image: 'Dockerfile'
-branding:
-  icon: 'book'
-  color: 'blue'
 jobs:
-  steps:
+  analyze:
+    name: analyze plugin db/ directory
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
 
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v12
@@ -24,15 +23,31 @@ jobs:
       with:
         files: |
             db
-            db/*
 
-    - name: Run step only when any of the above files change.
-      if: steps.verify-changed-files.outputs.files_changed == 'true'
-      run: |
-        echo "Changed files: ${{ steps.verify-changed-files.outputs.changed_files }}"
-      # Outputs: "Changed files: new.txt test_directory/new.txt"
-
-    - name: Perform action when db directory changes
+    - name: Run python when db directory changes
       if: contains(steps.verify-changed-files.outputs.changed_files, 'db')
-      run: |
-        echo "db/ directory has changed."
+      uses: docker
+      image: 'Dockerfile' 
+
+branding:
+  icon: 'book'
+  color: 'blue'
+  steps:
+
+
+
+
+
+
+
+jobs:
+  analyze:
+    name: Static Analysis with PHPStan
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Analysis
+      uses: docker://phpstan/phpstan
+      with:
+        args: analyze --error-format=table <code path>

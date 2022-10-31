@@ -9,6 +9,8 @@ inputs:
 outputs:
   version:
     description: "A version.php file updated to the Pull-Request."
+  changed files:
+    files: test.txt db/test.txt
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -29,7 +31,6 @@ branding:
       if: steps.verify-changed-files.outputs.files_changed == 'true'
       run: |
         echo "Changed files: ${{ steps.verify-changed-files.outputs.changed_files }}"
-      # Outputs: "Changed files: new.txt test_directory/new.txt"
 
     - name: Perform action when db directory changes
       if: contains(steps.verify-changed-files.outputs.changed_files, 'db')

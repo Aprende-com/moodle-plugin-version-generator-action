@@ -17,6 +17,7 @@ outputs:
     description: "changed files"
     value: ${{ steps.verify-changed-files.outputs.changed_files }}
 runs:
+  if: steps.verify-changed-files.outputs.files_changed == 'true'
   using: 'docker'
   image: 'Dockerfile'
   steps:

@@ -23,6 +23,7 @@ branding:
       with:
         files: |
             db
+            db/*
 
     - name: Perform action when db directory changes
       if: contains(steps.verify-changed-files.outputs.changed_files, 'db')

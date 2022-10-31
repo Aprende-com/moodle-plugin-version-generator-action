@@ -6,6 +6,12 @@ inputs:
     description: "Path where the repository is located"
     required: false
     default: '.'
+  files_changed:
+    description: Boolean indicating that files have changed.
+    value: ${{ steps.verify-changed-files.outputs.files_changed }}
+  changed_files:
+    description: List of changed files
+    value: ${{ steps.verify-changed-files.outputs.changed_files }}
 outputs:
   version:
     description: "A version.php file updated to the Pull-Request."
@@ -13,23 +19,22 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v12
       id: verify-changed-files
       with:
         files: |
-          test.txt
-          db
+            db
     - name: Run step only when any of the above files change.
       if: steps.verify-changed-files.outputs.files_changed == 'true'
       run: |
         echo "Changed files: ${{ steps.verify-changed-files.outputs.changed_files }}"
       # Outputs: "Changed files: new.txt test_directory/new.txt"
-    - name: Perform action when test_directory changes
+    - name: Perform action when db directory changes
       if: contains(steps.verify-changed-files.outputs.changed_files, 'db')
       run: |
-        echo "db has changed."
+        echo "db directory has changed."
 branding:
   icon: 'book'
   color: 'blue'

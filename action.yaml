@@ -11,15 +11,16 @@ inputs:
     description: Boolean indicating that files have changed.
     default: 'false'
   changed_files:
-    required: false
+    required: true
     description: List of changed files
 outputs:
   version:
     description: "A version.php file updated to the Pull-Request."
 runs:
-  if: ${{ inputs.files_changed }} == 'true'
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.changed_files }}
 branding:
   icon: 'book'
   color: 'blue'

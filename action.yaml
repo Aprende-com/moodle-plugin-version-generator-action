@@ -6,10 +6,18 @@ inputs:
     description: "Path where the repository is located"
     required: false
     default: '.'
+  files_changed:
+    required: true
+    description: Boolean indicating that files have changed.
+    default: 'false'
+  changed_files:
+    required: false
+    description: List of changed files
 outputs:
   version:
     description: "A version.php file updated to the Pull-Request."
 runs:
+  if: ${{ inputs.files_changed }} == 'true'
   using: 'docker'
   image: 'Dockerfile'
 branding:
